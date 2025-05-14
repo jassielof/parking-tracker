@@ -1,0 +1,35 @@
+name: Django CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Install dependencies with uv
+        run: uv sync
+
+      - name: Run migrations
+        run: uv run manage.py migrate
+
+      - name: Run tests
+        run: uv run manage.py test
+
+      - name: Ruff linting
+        run: uv run -m ruff check

@@ -1,0 +1,12 @@
+[project]
+name = "parking-tracker"
+version = "0.1.0"
+authors = [
+    { name = "Jassiel Ovando", email = "a2021117600@estudiantes.upsa.edu.bo" },
+    { name = "Mateo Fernandez" },
+    { name = "Emiliana Ribera" },
+]
+description = "Parking tracker app for android auto."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = ["django>=5.2.1", "ruff>=0.11.9"]
