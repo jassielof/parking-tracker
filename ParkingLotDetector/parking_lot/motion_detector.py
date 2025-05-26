@@ -4,6 +4,7 @@ from drawing_utils import draw_contours
 from colors import *
 from statuses import *
 from ultralytics import YOLO
+import torch
 
 class MotionDetector:
     LAPLACIAN = 1.2
@@ -17,7 +18,9 @@ class MotionDetector:
         self.bounds = []
         self.mask = []
         self.current_frame = None
-        self.yolo = YOLO("yolov8n.pt").to("cuda")
+        # Dynamically set device based on CUDA availability
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.yolo = YOLO("yolov8n.pt").to(device)
 
     def detect_motion(self):
         capture = open_cv.VideoCapture(self.video)
