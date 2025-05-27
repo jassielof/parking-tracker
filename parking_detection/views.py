@@ -1,3 +1,4 @@
+import json
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -252,3 +253,18 @@ class ParkingStatusView(APIView):
                 {"error": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+        
+class ParkingAvailabilityView(APIView):
+    def get(self):
+        try:
+            # Ruta absoluta basada en BASE_DIR
+            json_path = os.path.join(os.getcwd,"ParkingLotDetector","parking_lot","parking_lot_state.json")
+
+            if json_path.exists():
+                with json_path.open("r") as f:
+                    data = json.load(f)
+                return Response(data, status=status.HTTP_200_OK)
+            else:
+                return Response({"error": "Estado no disponible aún"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

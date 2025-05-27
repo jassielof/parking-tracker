@@ -1,3 +1,5 @@
+import json
+from pathlib import Path
 import cv2 as open_cv
 import numpy as np
 from drawing_utils import draw_contours
@@ -99,6 +101,18 @@ class MotionDetector:
                 draw_contours(new_frame, coordinates, str(p["id"] + 1), COLOR_WHITE, color)
 
             open_cv.imshow(str(self.video), new_frame)
+
+            status_data = {
+                "available_spaces": sum(1 for s in statuses if s == FREE),
+                "occupied_spaces": sum(1 for s in statuses if s == OCCUPIED),
+                "unknown_spaces": sum(1 for s in statuses if s == NOT_DETERMINED),
+                "total": len(statuses)
+            }
+            output_file = Path("parking_lot_state.json")
+            with output_file.open("w") as f:
+                json.dump(status_data, f)
+
+
             k = open_cv.waitKey(1)
             if k == ord("q"):
                 break
