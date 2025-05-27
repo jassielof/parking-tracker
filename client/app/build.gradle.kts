@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -56,4 +57,13 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0")
+
+    // Retrofit (para las llamadas de red)
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    // Converter para JSON (usaremos Gson)
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    // OkHttp para logging (útil para depuración)
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 }

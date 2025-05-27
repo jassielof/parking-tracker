@@ -1,1 +1,6 @@
-{"available_spaces": 1, "occupied_spaces": 0, "unknown_spaces": 1, "total": 2}
+{
+  "available_spaces": 7,
+  "occupied_spaces": 2,
+  "unknown_spaces": 1,
+  "total": 15
+}
