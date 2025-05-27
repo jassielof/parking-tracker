@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -8,6 +9,8 @@ import os
 import threading
 import uuid
 from django.conf import settings
+
+from server.settings import BASE_DIR
 from .utils.coordinates_generator import CoordinatesGenerator
 from .utils.detector_manager import DetectorManager
 from .models import ParkingLot, ParkingStatus
@@ -255,11 +258,9 @@ class ParkingStatusView(APIView):
             )
         
 class ParkingAvailabilityView(APIView):
-    def get(self):
+    def get(self, request):
         try:
-            # Ruta absoluta basada en BASE_DIR
-            json_path = os.path.join(os.getcwd,"ParkingLotDetector","parking_lot","parking_lot_state.json")
-
+            json_path = Path(settings.BASE_DIR) / "ParkingLotDetector" / "parking_lot" / "parking_lot_state.json"
             if json_path.exists():
                 with json_path.open("r") as f:
                     data = json.load(f)
